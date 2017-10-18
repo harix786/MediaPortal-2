@@ -4411,13 +4411,47 @@
         </Image.Source>
       </Image>
       <Label x:Name="ItemLabel" HorizontalAlignment="Center" VerticalAlignment="Center" 
-             TextTrimming="CharacterEllipsis" IsVisible="{Binding ElementName=ItemTypeImage, Path=!HasImage}"
-             Content="{Binding Channel.Name}" Color="Black" FontSize="{ThemeResource SmallerFontSize}" Margin="5"/>
+             Wrap="True" IsVisible="{Binding ElementName=ItemTypeImage, Path=!HasImage}"
+             Content="{Binding Channel.Name}" Color="Black" FontSize="{ThemeResource SmallFontSize}" Margin="5"/>
     </Grid>
   </DataTemplate>
 
   <DataTemplate x:Key="ProgramsDataTemplate" DataType="{x:Type collections:ListItem}">
-    <Grid x:Name="ItemControl" HorizontalAlignment="Stretch">
+    <Grid x:Name="ItemControl" HorizontalAlignment="Stretch" Width="900">
+      <Grid.Background>
+        <VisualBrush.Visual>
+          <Border Background="White" CornerRadius="3" BorderThickness="0" BorderBrush="Black"/>
+        </VisualBrush.Visual>
+      </Grid.Background>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="16*"/>
+        <ColumnDefinition Width="75*"/>
+        <ColumnDefinition Width="9*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="40"/>
+        <RowDefinition Height="40"/>
+      </Grid.RowDefinitions>
+      <Image x:Name="ItemTypeImage" Stretch="Uniform" Margin="3" Grid.RowSpan="2" VerticalAlignment="Center" >
+        <Image.Source>
+          <fanart:FanArtImageSource fanart:FanArtMediaType="{Binding ChannelLogoType}" fanart:FanArtType="Banner" fanart:FanArtName="{Binding Program.ChannelName}"
+                                    fanart:MaxWidth="{StaticResource VIDEO_GRID_WIDTH}" fanart:MaxHeight="{StaticResource VIDEO_GRID_HEIGHT}"/>
+        </Image.Source>
+      </Image>
+      <Label x:Name="ProgramLabel" VerticalAlignment="Center" Grid.Column="1" Margin="3" Content="{Binding Program.Title}" FontFamily="SegoeUIBold"
+             TextTrimming="CharacterEllipsis" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" />
+      <Label x:Name="StartTimeLabel" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="3" Content="{Binding Program.StartTime}"
+             Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" />
+      <Image VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Fill" Width="65" Height="65" Grid.Column="2" Margin="3,3,-20,3" Grid.RowSpan="2">
+        <Image.Source>
+          <Binding Path="Progress" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}CircularBar\{0:F0}.png"/>
+        </Image.Source>
+      </Image>
+    </Grid>
+  </DataTemplate>
+
+  <DataTemplate x:Key="SchedulesDataTemplate" DataType="{x:Type collections:ListItem}">
+    <Grid x:Name="ItemControl">
       <Grid.Background>
         <VisualBrush.Visual>
           <Border Background="White" CornerRadius="3" BorderThickness="0" BorderBrush="Black"/>
@@ -4432,41 +4466,22 @@
         <RowDefinition Height="40"/>
         <RowDefinition Height="40"/>
       </Grid.RowDefinitions>
-      <Image x:Name="ItemTypeImage" Stretch="Uniform" Margin="5" Grid.RowSpan="2" VerticalAlignment="Center" >
+             
+      <Image x:Name="ItemTypeImage" Stretch="Uniform" Margin="3">
         <Image.Source>
-          <fanart:FanArtImageSource fanart:FanArtMediaType="{Binding ChannelLogoType}" fanart:FanArtType="Banner" fanart:FanArtName="{Binding Channel.Name}"
+          <fanart:FanArtImageSource fanart:FanArtMediaType="{Binding ChannelLogoType}" fanart:FanArtType="Banner" fanart:FanArtName="{Binding Schedule.ChannelName}"
                                     fanart:MaxWidth="{StaticResource VIDEO_GRID_WIDTH}" fanart:MaxHeight="{StaticResource VIDEO_GRID_HEIGHT}"/>
         </Image.Source>
       </Image>
-      <Label x:Name="ProgramLabel" VerticalAlignment="Center" Grid.Column="1" Margin="3" Content="{Binding Program.Title}" FontFamily="SegoeUIBold"
+      <Label x:Name="ProgramLabel" VerticalAlignment="Center" Grid.Column="1" Margin="3" Content="{Binding Schedule.Title}" FontFamily="SegoeUIBold"
              TextTrimming="CharacterEllipsis" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" />
-      <Label x:Name="StartTimeLabel" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="3" Content="{Binding Program.StartTime}"
-             Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" />
-      <Image VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Fill" Width="65" Height="65" Grid.Column="2" Margin="3" Grid.RowSpan="2">
-        <Image.Source>
-          <Binding Path="Progress" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}CircularBar\{0:F0}.png"/>
-        </Image.Source>
-      </Image>
-    </Grid>
-  </DataTemplate>
-
-  <DataTemplate x:Key="SchedulesDataTemplate" DataType="{x:Type collections:ListItem}">
-    <Grid x:Name="ItemControl">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-      </Grid.RowDefinitions>
-      <Image x:Name="ItemTypeImage" Stretch="Uniform" Margin="5">
-        <Image.Source>
-          <fanart:FanArtImageSource fanart:FanArtMediaType="{Binding ChannelLogoType}" fanart:FanArtType="Banner" fanart:FanArtName="{Binding Channel.Name}"
-                                    fanart:MaxWidth="{StaticResource VIDEO_GRID_WIDTH}" fanart:MaxHeight="{StaticResource VIDEO_GRID_HEIGHT}"/>
-        </Image.Source>
-      </Image>
-      <Label x:Name="ItemLabel" HorizontalAlignment="Center" VerticalAlignment="Center" 
-             TextTrimming="CharacterEllipsis" IsVisible="{Binding ElementName=ItemTypeImage, Path=!HasImage}"
-             Content="{Binding Channel.Name}" Color="Black" FontSize="{ThemeResource SmallerFontSize}" Margin="5"/>
+      <StackPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Center">
+        <Label x:Name="StartTimeLabel" VerticalAlignment="Center"  Margin="3" Content="{Binding Schedule.StartTime}"
+               Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" />
+        <Label Margin="3" Content="-" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" VerticalAlignment="Center"/>
+        <Label x:Name="EndTimeLabel" VerticalAlignment="Center" Margin="3" Content="{Binding Schedule.EndTime}"
+               Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" />
+      </StackPanel>
     </Grid>
   </DataTemplate>
 
@@ -4529,16 +4544,16 @@
     </Setter>
   </Style>
 
-
-  <Style x:Key="HomeScreenCurrentSchedulesListViewStyle" BasedOn="{ThemeResource ContentsMenuListViewStyle}">
-    <EventSetter Event="SelectionChanged" Handler="{CommandStencil Source={StaticResource FanArtBackgroundModel}, Path=SetSelectedItemOrNull}"/>
+  <Style x:Key="HomeScreenCurrentSchedulesListViewStyle" BasedOn="{ThemeResource HomeScreenCurrentProgramsListViewStyle}">
     <Setter Property="ItemTemplate" Value="{ThemeResource SchedulesDataTemplate}"/>
-    <Setter Property="DataStringProvider" Value="{ThemeResource MediaItemDataStringProvider}"/>
-    <Setter Property="ItemContainerStyle" Value="{ThemeResource MediaItemWithContextMenuContainerStyle}"/>
+  </Style>
+
+  <!--Style x:Key="HomeScreenCurrentSchedulesListViewStyle" BasedOn="{ThemeResource LeftMenuListViewStyle}">
+    <Setter Property="ItemTemplate" Value="{ThemeResource SchedulesDataTemplate}"/>
     <Setter Property="LayoutTransform">
       <Setter.Value>
         <TransformGroup>
-          <ScaleTransform ScaleX="0.65" ScaleY="0.65"/>
+          <ScaleTransform ScaleX="1" ScaleY="1"/>
         </TransformGroup>
       </Setter.Value>
     </Setter>
@@ -4559,6 +4574,6 @@
         </ItemsPanelTemplate>
       </Setter.Value>
     </Setter>
-  </Style>
+  </-->
 
 </ResourceDictionary>
