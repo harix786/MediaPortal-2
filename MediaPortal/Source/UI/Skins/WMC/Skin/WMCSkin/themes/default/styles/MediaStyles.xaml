@@ -4389,7 +4389,7 @@
   </Style>
 
   <DataTemplate x:Key="ChannelDataTemplate" DataType="{x:Type collections:ListItem}">
-    <Grid x:Name="ItemControl">
+    <Grid x:Name="ItemControl" Margin="0,0,0,20">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="{StaticResource VIDEO_GRID_WIDTH}"/>
       </Grid.ColumnDefinitions>
