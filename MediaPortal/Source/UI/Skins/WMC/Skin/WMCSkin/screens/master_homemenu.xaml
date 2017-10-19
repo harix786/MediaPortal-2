@@ -48,6 +48,8 @@ Parameters which have to be accessible by a DynamicResource lookup:
 
     <!-- Background Manager for menu hovers -->
     <Model x:Key="BackgroundManagerModel" Id="1F4CAEDE-7108-483d-B5C8-18BEC7EC58E5"/>
+    <Model x:Key="CurrentWeatherModel" Id="FC57FF5C-F72F-47E9-B973-338E31FF7FF1"/>
+    <Model x:Key="TimeModel" Id="E821B1C8-0666-4339-8027-AA45A4F6F107"/>
     <Model x:Key="HomeMenuModel" Id="2EAA2DAB-241F-432F-A487-CDD35CCD4309"/>
     <Model x:Key="MediaListModel" Id="6121E6CC-EB66-4ABC-8AA0-D952B64C0414"/>
 
@@ -244,133 +246,133 @@ Parameters which have to be accessible by a DynamicResource lookup:
                   </EventTrigger.Actions>
                 </EventTrigger>
               </AnimatedStackPanel.Triggers>
-              
-            <!-- LATEST ADDED -->
-                <StackPanel>
+
+              <!-- LATEST ADDED -->
+              <StackPanel>
                 <Label x:Name="LatestAddedLabel" Content="[Media.LatestAdded]" 
                      FontFamily="SegoeUIBold" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" Margin="0,20,0,0"/>
-                  <ListView x:Name="Latest" Style="{ThemeResource HomeScreenMediaItemViewStyle}" HorizontalAlignment="Left">
-                    <ListView.ItemsSource>
-                      <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
+                <ListView x:Name="Latest" Style="{ThemeResource HomeScreenMediaItemViewStyle}" HorizontalAlignment="Left">
+                  <ListView.ItemsSource>
+                    <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
                               ConverterParameter="{}({0} == {1} ? {2} : ({0} == {3} ? {4} : ({0} == {5} ? {6} : ({0} == {7} ? {8} : ({0} == {9} ? {10} : ({0} == {11} ? {12} : {13}))))))">
-                        <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
-                        <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
-                        <Binding Source="{Binding Lists[LatestMovies].AllItems}"/>
-                        <Binding Source="30715d73-4205-417f-80aa-e82f0834171f"/>
-                        <Binding Source="{Binding Lists[LatestAudio].AllItems}"/>
-                        <Binding Source="30f57cba-459c-4202-a587-09fff5098251"/>
-                        <Binding Source="{Binding Lists[LatestEpisodes].AllItems}"/>
-                        <Binding Source="7f52d0a1-b7f8-46a1-a56b-1110bbfb7d51"/>
-                        <Binding Source="{Binding Lists[LatestRecordings].AllItems}"/>
-                        <Binding Source="55556593-9fe9-436c-a3b6-a971e10c9d44"/>
-                        <Binding Source="{Binding Lists[LatestImages].AllItems}"/>
-                        <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
-                        <Binding Source="{Binding Lists[LatestVideo].AllItems}"/>
-                        <Binding Source=""/>
-                      </MultiBinding>
-                    </ListView.ItemsSource>
-                    <ListView.Resources>
-                      <CommandBridge x:Key="Menu_Command" Command="{Binding Path=Command,Mode=OneTime}"/>
-                    </ListView.Resources>
-                    <ListView.Triggers>
-                      <Trigger Property="IsEmpty" Value="True">
-                        <Setter TargetName="LatestAddedLabel" Property="IsVisible" Value="False" />
-                      </Trigger>
-                    </ListView.Triggers>
-                  </ListView>
-                </StackPanel>
+                      <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
+                      <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
+                      <Binding Source="{Binding Lists[LatestMovies].AllItems}"/>
+                      <Binding Source="30715d73-4205-417f-80aa-e82f0834171f"/>
+                      <Binding Source="{Binding Lists[LatestAudio].AllItems}"/>
+                      <Binding Source="30f57cba-459c-4202-a587-09fff5098251"/>
+                      <Binding Source="{Binding Lists[LatestEpisodes].AllItems}"/>
+                      <Binding Source="7f52d0a1-b7f8-46a1-a56b-1110bbfb7d51"/>
+                      <Binding Source="{Binding Lists[LatestRecordings].AllItems}"/>
+                      <Binding Source="55556593-9fe9-436c-a3b6-a971e10c9d44"/>
+                      <Binding Source="{Binding Lists[LatestImages].AllItems}"/>
+                      <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
+                      <Binding Source="{Binding Lists[LatestVideo].AllItems}"/>
+                      <Binding Source=""/>
+                    </MultiBinding>
+                  </ListView.ItemsSource>
+                  <ListView.Resources>
+                    <CommandBridge x:Key="Menu_Command" Command="{Binding Path=Command,Mode=OneTime}"/>
+                  </ListView.Resources>
+                  <ListView.Triggers>
+                    <Trigger Property="IsEmpty" Value="True">
+                      <Setter TargetName="LatestAddedLabel" Property="IsVisible" Value="False" />
+                    </Trigger>
+                  </ListView.Triggers>
+                </ListView>
+              </StackPanel>
 
-                <!-- LATEST PLAYED -->
-                <StackPanel>
-                  <Label x:Name="LatestPlayedLabel" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" 
+              <!-- LATEST PLAYED -->
+              <StackPanel>
+                <Label x:Name="LatestPlayedLabel" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" 
                      FontFamily="SegoeUIBold" Content="[Media.LatestPlayed]" Margin="0,20,0,0"/>
-                  <ListView x:Name="LatestPlayed" HorizontalAlignment="Left">
-                    <ListView.Style>
-                      <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
+                <ListView x:Name="LatestPlayed" HorizontalAlignment="Left">
+                  <ListView.Style>
+                    <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
                               ConverterParameter="{}({0} == {1} ? {2} : {3})">
-                        <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
-                        <Binding Source="b4a9199f-6dd4-4bda-a077-de9c081f7703"/>
-                        <Binding Source="{StaticResource HomeScreenChannelStyle}" Path="Resource"/>
-                        <Binding Source="{StaticResource HomeScreenMediaItemStyle}" Path="Resource"/>
-                      </MultiBinding>
-                    </ListView.Style>
-                    <ListView.ItemsSource>
-                      <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
+                      <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
+                      <Binding Source="b4a9199f-6dd4-4bda-a077-de9c081f7703"/>
+                      <Binding Source="{StaticResource HomeScreenChannelStyle}" Path="Resource"/>
+                      <Binding Source="{StaticResource HomeScreenMediaItemStyle}" Path="Resource"/>
+                    </MultiBinding>
+                  </ListView.Style>
+                  <ListView.ItemsSource>
+                    <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
                               ConverterParameter="{}({0} == {1} ? {2} : ({0} == {3} ? {4} : ({0} == {5} ? {6} : ({0} == {7} ? {8} : ({0} == {9} ? {10} : ({0} == {11} ? {12} : ({0} == {13} ? {14} : {15})))))))">
-                        <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
-                        <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
-                        <Binding Source="{Binding Lists[LastPlayMovies].AllItems}"/>
-                        <Binding Source="30715d73-4205-417f-80aa-e82f0834171f"/>
-                        <Binding Source="{Binding Lists[LastPlayAudio].AllItems}"/>
-                        <Binding Source="30f57cba-459c-4202-a587-09fff5098251"/>
-                        <Binding Source="{Binding Lists[LastPlayEpisodes].AllItems}"/>
-                        <Binding Source="7f52d0a1-b7f8-46a1-a56b-1110bbfb7d51"/>
-                        <Binding Source="{Binding Lists[LastPlayRecordings].AllItems}"/>
-                        <Binding Source="55556593-9fe9-436c-a3b6-a971e10c9d44"/>
-                        <Binding Source="{Binding Lists[LastPlayImages].AllItems}"/>
-                        <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
-                        <Binding Source="{Binding Lists[LastPlayVideo].AllItems}"/>
-                        <Binding Source="b4a9199f-6dd4-4bda-a077-de9c081f7703"/>
-                        <Binding Source="{Binding Lists[LastPlayTV].AllItems}"/>
-                        <Binding Source=""/>
-                      </MultiBinding>
-                    </ListView.ItemsSource>
-                    <ListView.Resources>
-                      <CommandBridge x:Key="Menu_Command" Command="{Binding Path=Command,Mode=OneTime}"/>
-                    </ListView.Resources>
-                    <ListView.Triggers>
-                      <Trigger Property="IsEmpty" Value="True">
-                        <Setter TargetName="LatestPlayedLabel" Property="Visibility" Value="Hidden" />
-                      </Trigger>
-                    </ListView.Triggers>
-                  </ListView>
-                </StackPanel>
+                      <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
+                      <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
+                      <Binding Source="{Binding Lists[LastPlayMovies].AllItems}"/>
+                      <Binding Source="30715d73-4205-417f-80aa-e82f0834171f"/>
+                      <Binding Source="{Binding Lists[LastPlayAudio].AllItems}"/>
+                      <Binding Source="30f57cba-459c-4202-a587-09fff5098251"/>
+                      <Binding Source="{Binding Lists[LastPlayEpisodes].AllItems}"/>
+                      <Binding Source="7f52d0a1-b7f8-46a1-a56b-1110bbfb7d51"/>
+                      <Binding Source="{Binding Lists[LastPlayRecordings].AllItems}"/>
+                      <Binding Source="55556593-9fe9-436c-a3b6-a971e10c9d44"/>
+                      <Binding Source="{Binding Lists[LastPlayImages].AllItems}"/>
+                      <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
+                      <Binding Source="{Binding Lists[LastPlayVideo].AllItems}"/>
+                      <Binding Source="b4a9199f-6dd4-4bda-a077-de9c081f7703"/>
+                      <Binding Source="{Binding Lists[LastPlayTV].AllItems}"/>
+                      <Binding Source=""/>
+                    </MultiBinding>
+                  </ListView.ItemsSource>
+                  <ListView.Resources>
+                    <CommandBridge x:Key="Menu_Command" Command="{Binding Path=Command,Mode=OneTime}"/>
+                  </ListView.Resources>
+                  <ListView.Triggers>
+                    <Trigger Property="IsEmpty" Value="True">
+                      <Setter TargetName="LatestPlayedLabel" Property="Visibility" Value="Hidden" />
+                    </Trigger>
+                  </ListView.Triggers>
+                </ListView>
+              </StackPanel>
 
-                <!-- FAVORITES -->
-                <StackPanel>
+              <!-- FAVORITES -->
+              <StackPanel>
                 <Label x:Name="FavoriteLabel" Content="[Media.Favorites]" Color="{ThemeResource TextColor}" 
                      FontFamily="SegoeUIBold" FontSize="{ThemeResource SmallerFontSize}" Margin="0,20,0,0"/>
-                  <ListView x:Name="Favorits" HorizontalAlignment="Left">
-                    <ListView.Style>
-                      <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
+                <ListView x:Name="Favorits" HorizontalAlignment="Left">
+                  <ListView.Style>
+                    <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
                               ConverterParameter="{}({0} == {1} ? {2} : {3})">
-                        <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
-                        <Binding Source="b4a9199f-6dd4-4bda-a077-de9c081f7703"/>
-                        <Binding Source="{StaticResource HomeScreenChannelStyle}" Path="Resource"/>
-                        <Binding Source="{StaticResource HomeScreenMediaItemStyle}" Path="Resource"/>
-                      </MultiBinding>
-                    </ListView.Style>
-                    <ListView.ItemsSource>
-                      <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
+                      <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
+                      <Binding Source="b4a9199f-6dd4-4bda-a077-de9c081f7703"/>
+                      <Binding Source="{StaticResource HomeScreenChannelStyle}" Path="Resource"/>
+                      <Binding Source="{StaticResource HomeScreenMediaItemStyle}" Path="Resource"/>
+                    </MultiBinding>
+                  </ListView.Style>
+                  <ListView.ItemsSource>
+                    <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
                               ConverterParameter="{}({0} == {1} ? {2} : ({0} == {3} ? {4} : ({0} == {5} ? {6} : ({0} == {7} ? {8} : ({0} == {9} ? {10} : ({0} == {11} ? {12} : ({0} == {13} ? {14} : {15})))))))">
-                        <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
-                        <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
-                        <Binding Source="{Binding Lists[FavoriteMovies].AllItems}"/>
-                        <Binding Source="30715d73-4205-417f-80aa-e82f0834171f"/>
-                        <Binding Source="{Binding Lists[FavoriteAudio].AllItems}"/>
-                        <Binding Source="30f57cba-459c-4202-a587-09fff5098251"/>
-                        <Binding Source="{Binding Lists[FavoriteEpisodes].AllItems}"/>
-                        <Binding Source="7f52d0a1-b7f8-46a1-a56b-1110bbfb7d51"/>
-                        <Binding Source="{Binding Lists[FavoriteRecordings].AllItems}"/>
-                        <Binding Source="55556593-9fe9-436c-a3b6-a971e10c9d44"/>
-                        <Binding Source="{Binding Lists[FavoriteImages].AllItems}"/>
-                        <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
-                        <Binding Source="{Binding Lists[FavoriteVideo].AllItems}"/>
-                        <Binding Source="b4a9199f-6dd4-4bda-a077-de9c081f7703"/>
-                        <Binding Source="{Binding Lists[FavoriteTV].AllItems}"/>
-                        <Binding Source=""/>
-                      </MultiBinding>
-                    </ListView.ItemsSource>
-                    <ListView.Resources>
-                      <CommandBridge x:Key="Menu_Command" Command="{Binding Path=Command,Mode=OneTime}"/>
-                    </ListView.Resources>
-                    <ListView.Triggers>
-                      <Trigger Property="IsEmpty" Value="True">
-                        <Setter TargetName="FavoriteLabel" Property="Visibility" Value="Hidden" />
-                      </Trigger>
-                    </ListView.Triggers>
-                  </ListView>
-                </StackPanel>
+                      <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
+                      <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
+                      <Binding Source="{Binding Lists[FavoriteMovies].AllItems}"/>
+                      <Binding Source="30715d73-4205-417f-80aa-e82f0834171f"/>
+                      <Binding Source="{Binding Lists[FavoriteAudio].AllItems}"/>
+                      <Binding Source="30f57cba-459c-4202-a587-09fff5098251"/>
+                      <Binding Source="{Binding Lists[FavoriteEpisodes].AllItems}"/>
+                      <Binding Source="7f52d0a1-b7f8-46a1-a56b-1110bbfb7d51"/>
+                      <Binding Source="{Binding Lists[FavoriteRecordings].AllItems}"/>
+                      <Binding Source="55556593-9fe9-436c-a3b6-a971e10c9d44"/>
+                      <Binding Source="{Binding Lists[FavoriteImages].AllItems}"/>
+                      <Binding Source="80d2e2cc-baaa-4750-807b-f37714153751"/>
+                      <Binding Source="{Binding Lists[FavoriteVideo].AllItems}"/>
+                      <Binding Source="b4a9199f-6dd4-4bda-a077-de9c081f7703"/>
+                      <Binding Source="{Binding Lists[FavoriteTV].AllItems}"/>
+                      <Binding Source=""/>
+                    </MultiBinding>
+                  </ListView.ItemsSource>
+                  <ListView.Resources>
+                    <CommandBridge x:Key="Menu_Command" Command="{Binding Path=Command,Mode=OneTime}"/>
+                  </ListView.Resources>
+                  <ListView.Triggers>
+                    <Trigger Property="IsEmpty" Value="True">
+                      <Setter TargetName="FavoriteLabel" Property="Visibility" Value="Hidden" />
+                    </Trigger>
+                  </ListView.Triggers>
+                </ListView>
+              </StackPanel>
 
               <!-- CURRENT PROGRAM AND SCHEDULE -->
               <StackPanel HorizontalAlignment="Stretch">
@@ -417,6 +419,45 @@ Parameters which have to be accessible by a DynamicResource lookup:
                   </ListView.Triggers>
                 </ListView>
               </StackPanel>
+
+              <Grid DataContext="{Binding Source={StaticResource CurrentWeatherModel}}" VerticalAlignment="Top" Margin="0,30,0,0">
+                <Grid.IsVisible>
+                  <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
+                                  ConverterParameter="{}{0} == {1}">
+                    <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
+                    <Binding Source="e34fdb62-1f3e-4aa9-8a61-d143e0af77b5"/>
+                  </MultiBinding>
+                </Grid.IsVisible>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="30" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label x:Name="Temperature" FontSize="{ThemeResource HugeFontSize}" Color="{ThemeResource TextColor}" 
+                       Content="{Binding CurrentLocation.Condition.Temperature}" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" x:Name="LocName" FontSize="{ThemeResource HugeFontSize}" Color="{ThemeResource TextColor}" Content="{Binding CurrentLocation.Name}"/>
+                <Image Grid.Row="1" x:Name="BigIcon" Stretch="Fill" Height="175" Width="175" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Source="{Binding CurrentLocation.Condition.BigIconProperty}"/>
+
+                <StackPanel Grid.Row="1" Grid.Column="2">
+                  <Label x:Name="Date" FontSize="{ThemeResource NormalFontSize}"
+                         Content="{Binding Source={StaticResource TimeModel}, Path=CurrentDate}" Color="{ThemeResource TextColor}"/>
+                  <Label x:Name="Wind" FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource MenuTextBackground}" 
+                         Content="{Binding CurrentLocation.Condition.Wind}" Opacity="1.3"/>
+                  <StackPanel Orientation="Horizontal">
+                    <Label x:Name="Humidity" FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource MenuTextBackground}" 
+                           Content="{Binding CurrentLocation.Condition.Humidity}" Opacity="1.3"/>
+                    <Label FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource MenuTextBackground}" Content="   " Opacity="1.3"/>
+                    <Label x:Name="Pressure" FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource MenuTextBackground}" 
+                           Content="{Binding CurrentLocation.Condition.Pressure}" Opacity="1.3"/>
+                  </StackPanel>
+                </StackPanel>
+              </Grid>
 
             </AnimatedStackPanel>
           </ScrollViewer>
