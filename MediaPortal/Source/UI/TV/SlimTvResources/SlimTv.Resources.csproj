@@ -78,6 +78,8 @@
     <Content Include="Designs\Modern-StreamedMP 16x9\sample.png" />
     <Content Include="Designs\Flat\background.png" />
     <Content Include="Designs\Flat\overlay.png" />
+    <Content Include="Designs\Original\background.png" />
+    <Content Include="Designs\Original\overlay.png" />
     <Content Include="plugin.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -106,6 +108,7 @@
     </None>
     <None Include="Designs\Modern-StreamedMP 16x9-max.logotheme" />
     <None Include="Designs\Flat-default.logotheme" />
+    <None Include="Designs\Original-3x1.logotheme" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

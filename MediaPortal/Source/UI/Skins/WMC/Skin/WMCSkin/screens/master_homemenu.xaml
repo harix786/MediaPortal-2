@@ -52,6 +52,7 @@ Parameters which have to be accessible by a DynamicResource lookup:
     <Model x:Key="TimeModel" Id="E821B1C8-0666-4339-8027-AA45A4F6F107"/>
     <Model x:Key="HomeMenuModel" Id="2EAA2DAB-241F-432F-A487-CDD35CCD4309"/>
     <Model x:Key="MediaListModel" Id="6121E6CC-EB66-4ABC-8AA0-D952B64C0414"/>
+    <Model x:Key="CurrentNewsModel" Id="EE1BBF83-AE5C-491C-9978-14737A2B0883"/>
 
     <!-- Header has to be defined by the includer: "Header_Text" -->
 
@@ -420,10 +421,11 @@ Parameters which have to be accessible by a DynamicResource lookup:
                 </ListView>
               </StackPanel>
 
+              <!--++++++++++ CURRENT WEATHER +++++++++++-->
               <Grid DataContext="{Binding Source={StaticResource CurrentWeatherModel}}" VerticalAlignment="Top" Margin="0,30,0,0">
                 <Grid.IsVisible>
                   <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
-                                  ConverterParameter="{}{0} == {1}">
+                                ConverterParameter="{}{0} == {1}">
                     <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
                     <Binding Source="e34fdb62-1f3e-4aa9-8a61-d143e0af77b5"/>
                   </MultiBinding>
@@ -457,6 +459,32 @@ Parameters which have to be accessible by a DynamicResource lookup:
                            Content="{Binding CurrentLocation.Condition.Pressure}" Opacity="1.3"/>
                   </StackPanel>
                 </StackPanel>
+              </Grid>
+
+              <!--++++++++++ CURRENT NEWS +++++++++++-->
+              <Grid Margin="0,30,0,0" Height="350" Width="980" HorizontalAlignment="Left"
+                    DataContext="{Binding Source={StaticResource CurrentNewsModel}}">
+                <Grid.IsVisible>
+                  <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" 
+                                ConverterParameter="{}{0} == {1}">
+                    <Binding Source="{Binding Source={StaticResource HomeMenuModel}, Path=CurrentSubItem}" Path="AdditionalProperties[HomeMenuModel: ActionId]"/>
+                    <Binding Source="bb49a591-7705-408f-8177-45d633fdfad0"/>
+                  </MultiBinding>
+                </Grid.IsVisible>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" x:Name="News" FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource TextColor}" Wrap="True"
+                       Content="{Binding CurrentNewsItem.Title}" FontFamily="SegoeUIBold" HorizontalAlignment="Stretch"/>
+                <Label Grid.Row="1" Margin="0,10,0,20" x:Name="NewSummary" Wrap="True"
+                       Content="{Binding CurrentNewsItem.Summary}" HorizontalAlignment="Stretch"
+                       Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}"/>
               </Grid>
 
             </AnimatedStackPanel>
