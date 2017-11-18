@@ -4392,12 +4392,12 @@
   </Style>
 
   <DataTemplate x:Key="ChannelDataTemplate" DataType="{x:Type collections:ListItem}">
-    <Grid x:Name="ItemControl" Margin="0,0,0,20">
+    <Grid x:Name="ItemControl">
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="{StaticResource VIDEO_GRID_WIDTH}"/>
+        <ColumnDefinition Width="{StaticResource CHANNELLOGO_GRID_WIDTH}"/>
       </Grid.ColumnDefinitions>
       <Grid.RowDefinitions>
-        <RowDefinition Height="{StaticResource VIDEO_GRID_HEIGHT}"/>
+        <RowDefinition Height="{StaticResource CHANNELLOGO_GRID_HEIGHT}"/>
       </Grid.RowDefinitions>
       <Grid.OpacityMask>
         <VisualBrush>
@@ -4410,12 +4410,13 @@
       <Image x:Name="ItemTypeImage" Stretch="Uniform" Margin="5">
         <Image.Source>
           <fanart:FanArtImageSource fanart:FanArtMediaType="{Binding ChannelLogoType}" fanart:FanArtType="Banner" fanart:FanArtName="{Binding Channel.Name}"
-                                    fanart:MaxWidth="{StaticResource VIDEO_GRID_WIDTH}" fanart:MaxHeight="{StaticResource VIDEO_GRID_HEIGHT}"/>
+                                    fanart:MaxWidth="{StaticResource CHANNELLOGO_GRID_WIDTH}" fanart:MaxHeight="{StaticResource CHANNELLOGO_GRID_HEIGHT}"/>
         </Image.Source>
       </Image>
-      <Label x:Name="ItemLabel" HorizontalAlignment="Center" VerticalAlignment="Center" 
-             Wrap="True" IsVisible="{Binding ElementName=ItemTypeImage, Path=!HasImage}"
-             Content="{Binding Channel.Name}" Color="Black" FontSize="{ThemeResource SmallFontSize}" Margin="5"/>
+      <Label x:Name="ItemLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Height="{StaticResource CHANNELLOGO_GRID_HEIGHT}"
+             Wrap="True" IsVisible="{Binding ElementName=ItemTypeImage, Path=!HasImage}" Width="{StaticResource CHANNELLOGO_GRID_WIDTH}"
+             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+             Content="{Binding Channel.Name}" Color="Black" FontSize="{ThemeResource SmallerFontSize}" Margin="5"/>
     </Grid>
   </DataTemplate>
 
@@ -4493,18 +4494,18 @@
     <Setter Property="ItemTemplate" Value="{ThemeResource ChannelDataTemplate}"/>
     <Setter Property="DataStringProvider" Value="{ThemeResource MediaItemDataStringProvider}"/>
     <Setter Property="ItemContainerStyle" Value="{ThemeResource MediaItemGridViewContainerStyle}"/>
-    <Setter Property="LayoutTransform">
+    <!--Setter Property="LayoutTransform">
       <Setter.Value>
         <TransformGroup>
           <ScaleTransform ScaleX="0.65" ScaleY="0.65"/>
         </TransformGroup>
       </Setter.Value>
-    </Setter>
+    </-->
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListView}">
-          <ScrollViewer CanContentScroll="True" Margin="0,5,0,-25"
-              VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+          <ScrollViewer CanContentScroll="True" Margin="0,5,0,-25" HorizontalScrollBarVisibility="Hidden"
+              VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             <ItemsPresenter VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
           </ScrollViewer>
         </ControlTemplate>

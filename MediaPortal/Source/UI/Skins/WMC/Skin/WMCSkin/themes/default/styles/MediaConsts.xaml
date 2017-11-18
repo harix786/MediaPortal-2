@@ -58,4 +58,7 @@
     <ResourceWrapper x:Key="ARTIST_GRID_WIDTH" Resource="162"/>
     <ResourceWrapper x:Key="ARTIST_GRID_HEIGHT" Resource="162"/>
 
+  <ResourceWrapper x:Key="CHANNELLOGO_GRID_WIDTH" Resource="182"/>
+  <ResourceWrapper x:Key="CHANNELLOGO_GRID_HEIGHT" Resource="85"/>
+
 </ResourceDictionary>
